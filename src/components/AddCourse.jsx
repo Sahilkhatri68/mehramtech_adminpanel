@@ -114,7 +114,6 @@ function AddCourse() {
 
   return (
     <div>
-      {/* ClassCreateAlert Box */}
       <Header
         Children={
           <div className="p-2">
@@ -156,6 +155,9 @@ function AddCourse() {
                         <thead>
                           <tr className="bg-[#d8d8d8] border-b border-gray-200 text-xs leading-4 text-gray-700 uppercase font-bold tracking-wider">
                             <th className="px-6 py-3 text-left font-semibold">
+                              #
+                            </th>
+                            <th className="px-6 py-3 text-left font-semibold">
                               Shop Name
                             </th>
                             <th className="px-6 py-3 text-left font-semibold">
@@ -167,9 +169,9 @@ function AddCourse() {
                             <th className="px-6 py-3 text-left font-semibold">
                               Phone No
                             </th>
-                            <th className="px-6 py-3 text-left font-semibold">
+                            {/* <th className="px-6 py-3 text-left font-semibold">
                               Id
-                            </th>
+                            </th> */}
                             <th className="px-6 py-3 text-left font-semibold">
                               Country
                             </th>
@@ -198,9 +200,15 @@ function AddCourse() {
                                       .toLowerCase()
                                       .includes(Search.toLowerCase());
                               })
-                              .map((i) => {
+                              .map((i, index) => {
+                                const serialNumber = index + 1;
                                 return (
                                   <tr key={i._id}>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                      <div className="text-sm font-bold leading-5 text-gray-900">
+                                        {serialNumber}
+                                      </div>
+                                    </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="text-sm leading-5 text-gray-900">
                                         {i.shopname}
@@ -224,11 +232,11 @@ function AddCourse() {
                                         {i.shopkeeperphoneno}
                                       </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    {/* <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="text-sm leading-5 text-gray-900">
                                         {i.uniqueId}
                                       </div>
-                                    </td>
+                                    </td> */}
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="text-sm leading-5 text-gray-900">
                                         {i.country}

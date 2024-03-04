@@ -10,5 +10,11 @@
     "title": "Add Shopkeeper",
     "icon": "bi-database-fill-add",
     "path": "/addcourse"
+  },
+  {
+    "id": 3,
+    "title": "Product's",
+    "icon": "bi-list-task",
+    "path": "/productlist"
   }
 ]

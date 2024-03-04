@@ -14,6 +14,7 @@ import axios from "axios";
 import ViewCourseDetail from "./components/ViewCourseDetail";
 import AddTeacher from "./components/AddTeacher";
 import Students from "./components/Students";
+import ProductsListForServices from "./components/ProductsListForServices";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -21,18 +22,22 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Body />}></Route>
-        <Route path="/students" element={<Students />}></Route>
-        <Route path="/account" element={<Account />}></Route>
-        <Route path="/support" element={<Support />}></Route>
-        <Route path="/viewteacher" element={<Viewteacher />}></Route>
-        <Route path="/aboutus" element={<Aboutus />}></Route>
-        <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/addteacher" element={<AddTeacher />}></Route>
+        <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route
+          path="/productlist"
+          element={<ProductsListForServices />}
+        ></Route>
+        {/* <Route path="/students" element={<Students />}></Route> */}
+        {/* <Route path="/account" element={<Account />}></Route> */}
+        {/* <Route path="/support" element={<Support />}></Route> */}
+        {/* <Route path="/viewteacher" element={<Viewteacher />}></Route> */}
+        {/* <Route path="/aboutus" element={<Aboutus />}></Route> */}
+        {/* <Route path="/addteacher" element={<AddTeacher />}></Route> */}
+        {/* <Route
           path="/viewcoursedetail/:_id"
           element={<ViewCourseDetail />}
-        ></Route>
+        ></Route> */}
         <Route path="*" element={<Noutfound />}></Route>
       </Routes>
 
