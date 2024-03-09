@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
@@ -19,11 +18,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function ProductsListForServices() {
   const [allrequestedDevice, setAllrequestedDevice] = useState(); // to get all request from api
   const [issuechange, setIssuechange] = useState(); // to handle select menu
-  const [fetchedProductById, setFetchedProductById] = useState();
+  const [fetchedProductById, setFetchedProductById] = useState([]);
+  // code to fetch all request
   const getAllRequestForService = () => {
     axios
       .get(`${API}/devicerequest`)
       .then((res) => {
+        // console.log(res.data.allrequestedDevices);
         setAllrequestedDevice(res.data.allrequestedDevices);
       })
       .catch((err) => {
@@ -34,22 +35,21 @@ function ProductsListForServices() {
     getAllRequestForService();
   }, []);
 
+  // code to handle menu option
   const handleSelectmenuIssueChanged = async (e) => {
     setIssuechange(e.target.value);
   };
 
-  const handleprodcutStatusUpdate = (_id) => {
-    console.log(issuechange + _id);
-  };
-  // -----------------------------------------------
+  // code to open dialog of problem change box
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = async (_id) => {
-    setOpen(true);
     await axios
       .get(`${API}/devicerequest/${_id}`)
       .then((res) => {
+        // console.log(res.data);
         setFetchedProductById(res.data);
+        setOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -58,6 +58,36 @@ function ProductsListForServices() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // code to update problemstatus with axios put request
+  const handleProblemUpdate = async (_id) => {
+    console.log(issuechange);
+    setOpen(false);
+
+    try {
+      const updatedData = {
+        issueresolveStatus: issuechange,
+      };
+      await axios
+        .put(`${API}/devicerequest/${_id}`, updatedData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setOpen(false);
+      // Optionally, you can fetch updated data or perform other actions after the update
+      getAllRequestForService();
+    } catch (error) {
+      console.error("Error updating issue status:", error);
+    }
   };
   return (
     <div>
@@ -192,50 +222,60 @@ function ProductsListForServices() {
                 </div>
               </div>
             </div>
-            <Dialog
-              open={open}
-              TransitionComponent={Transition}
-              keepMounted
-              onClose={handleClose}
-              aria-describedby="alert-dialog-slide-description"
-            >
-              <DialogTitle>
-                Update Device Problem Status{" "}
-                <span className="font-bold">
-                  ( {fetchedProductById.brand} )
-                </span>
-                <hr />
-              </DialogTitle>
-              <DialogContent>
-                <div className="m-2 flex items-center text-[20px]">
-                  <div className="w-[130px]">Model </div>:
-                  <span className="ml-2">{fetchedProductById.model}</span>
-                </div>
-                <div className="m-2 flex items-center text-[20px]">
-                  <div className="w-[130px]">IMEI </div>:
-                  <span className="ml-2">{fetchedProductById.imei}</span>
-                </div>
-                <div className="m-2 flex items-center text-[20px]">
-                  <div className="w-[130px]">Issue </div>:
-                  <span className="ml-2">{fetchedProductById.problem}</span>
-                </div>
-                <div className="m-2 flex items-center text-[20px]">
-                  <div className="w-[130px]">Update Issue </div>:
-                  <span className="ml-2">
-                    <select name="cars" id="cars">
-                      <option>Choose</option>
-                      <option value="completed">Completed</option>
-                      <option value="not-completed">Not-completed</option>
-                      <option value="pending">Pending</option>
-                    </select>
+            {fetchedProductById !== "" || null ? (
+              <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle>
+                  Update Device Problem Status{" "}
+                  <span className="font-bold">
+                    ( {fetchedProductById.brand} )
                   </span>
-                </div>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={handleClose}>Agree</Button>
-              </DialogActions>
-            </Dialog>
+                  <hr />
+                </DialogTitle>
+                <DialogContent>
+                  <div className="m-2 flex items-center text-[20px]">
+                    <div className="w-[130px]">Model </div>:
+                    <span className="ml-2">{fetchedProductById.model}</span>
+                  </div>
+                  <div className="m-2 flex items-center text-[20px]">
+                    <div className="w-[130px]">IMEI </div>:
+                    <span className="ml-2">{fetchedProductById.imei}</span>
+                  </div>
+                  <div className="m-2 flex items-center text-[20px]">
+                    <div className="w-[130px]">Issue </div>:
+                    <span className="ml-2">{fetchedProductById.problem}</span>
+                  </div>
+                  <div className="m-2 flex items-center text-[20px]">
+                    <div className="w-[130px]">Update Issue </div>:
+                    <span className="ml-2">
+                      <select
+                        value={issuechange}
+                        onChange={handleSelectmenuIssueChanged}
+                        id="problem"
+                      >
+                        {/* <option>----Choose----</option> */}
+                        <option value="completed">Completed</option>
+                        <option value="not-completed">Not-completed</option>
+                        <option value="pending">Pending</option>
+                      </select>
+                    </span>
+                  </div>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button
+                    onClick={() => handleProblemUpdate(fetchedProductById._id)}
+                  >
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            ) : null}
           </div>
         }
       ></Header>

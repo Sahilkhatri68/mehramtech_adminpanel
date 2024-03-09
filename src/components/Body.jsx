@@ -3,13 +3,13 @@ import Header from "./Header";
 import { useState } from "react";
 import axios from "axios";
 import { API } from "./API/API";
-import { ToastContainer, toast } from "react-toastify";
 import { FaShop } from "react-icons/fa6";
 import { MdWork } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
 import { BiWorld } from "react-icons/bi";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+// import io from "socket.io-client";
 
 function Body({ Children }) {
   const [totalshops, setTotalshops] = useState(); //code to get total shops
