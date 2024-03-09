@@ -26,12 +26,11 @@ function Header({ Children }) {
 
   const checklogin = () => {
     axios
-      .get(`${API}/login/check_have_token`, {
+      .get(`${API}/adminAuthentication/check_have_token`, {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res);
-        if (res.data !== true) return navigate("/login");
+        if (res.data.token !== true) return navigate("/login");
       })
       .catch((err) => {
         navigate("/login");
@@ -39,9 +38,9 @@ function Header({ Children }) {
       });
   };
 
-  // useEffect(() => {
-  //   checklogin();
-  // }, []);
+  useEffect(() => {
+    checklogin();
+  }, []);
 
   const displaySidebar = () => {
     setSidebar(!sidebar);
@@ -50,12 +49,12 @@ function Header({ Children }) {
   // code for logout admin
   const HandleLogout = () => {
     axios
-      .get(`${API}/adminlogout`, {
+      .post(`${API}/adminAuthentication/adminlogout`, {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res);
-        navigate("/login");
+        console.log(res);
+        window.location.href = "/login";
       })
       .catch((err) => {
         console.log(err);
@@ -204,7 +203,7 @@ function Header({ Children }) {
 
         <DialogActions>
           <Button color="error" variant="contained" onClick={handleAlertClose}>
-            Disagree
+            No
           </Button>
           <Button
             color="success"
@@ -212,7 +211,7 @@ function Header({ Children }) {
             onClick={HandleLogout}
             autoFocus
           >
-            Agree
+            Yes
           </Button>
         </DialogActions>
       </Dialog>

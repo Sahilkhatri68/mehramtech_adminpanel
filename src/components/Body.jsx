@@ -52,7 +52,7 @@ function Body({ Children }) {
   const getAdmin = async () => {
     try {
       const response = await axios.get(
-        `${API}/adminsettings/getadmin/65d9e6548da22e0c726c3bc0`
+        `${API}/adminsettings/getadmin/65ec5a7200254d90494b2ec7`
       );
       adminData = response.data;
       //   console.log(adminData);
