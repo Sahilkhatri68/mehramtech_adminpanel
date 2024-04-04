@@ -5,18 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
 import "./styles/Header.css";
 import sidebaritems from "./SidebarItems/SidebarContent.json";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import axios from "axios";
 import { API } from "./API/API";
+import io from "socket.io-client";
 
 function Header({ Children }) {
   const [sidebar, setSidebar] = useState(false); // for handling sidebar
@@ -69,12 +63,48 @@ function Header({ Children }) {
     setAlertLogout(false);
   };
 
+  // websocket connection code
+  useEffect(() => {
+    const socket = io("http://localhost:4000", { transports: ["websocket"] });
+
+    socket.on("connect", () => {
+      console.log("Admin is connected with WebSocket server");
+      socket.emit("admin_connected", "Admin is connected with shopkeeper");
+    });
+
+    socket.on("shopkeeper_message", (data) => {
+      console.log("Received message from shopkeeper:", data);
+    });
+
+    socket.on("notification", (message) => {
+      console.log("Received notification from shopkeeper:", message);
+    });
+
+    // socket.on("disconnect", () => {
+    //   console.log("Disconnected from WebSocket server");
+    // });
+
+    // // Example: Handle incoming messages
+    // socket.on("message", (data) => {
+    //   console.log("Received message:", data);
+    //   // Update state or perform actions based on incoming messages
+    // });
+
+    // // Example: Emit a message to the server
+    // socket.emit("hello", "Hello, server!");
+
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div>
       {/* code for Header---------------------- */}
       <div className="w-full fixed overflow-hidden z-10 top-0 flex justify-between bg-[#0f1131] p-3">
         <div className="md:w-[30%]  text-white  w-full font-bold text-2xl">
-          <Link to="/">Mehram Tech CRM </Link> (0.1 Beta)
+          <Link to="/">MTG </Link> (0.1 Beta)
         </div>
 
         <div

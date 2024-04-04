@@ -15,6 +15,9 @@ import ViewCourseDetail from "./components/ViewCourseDetail";
 import AddTeacher from "./components/AddTeacher";
 import Students from "./components/Students";
 import ProductsListForServices from "./components/ProductsListForServices";
+import CompletedProductList from "./components/CompletedProductList";
+import UnReadNotification_Devices from "./components/UnReadNotificationDevices";
+import UnReadNotificationDevices from "./components/UnReadNotificationDevices";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -25,8 +28,16 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route
+          path="/completedproductlist"
+          element={<CompletedProductList />}
+        ></Route>
+        <Route
           path="/productlist"
           element={<ProductsListForServices />}
+        ></Route>
+        <Route
+          path="/unreadNotificationDevices"
+          element={<UnReadNotificationDevices />}
         ></Route>
         {/* <Route path="/students" element={<Students />}></Route> */}
         {/* <Route path="/account" element={<Account />}></Route> */}

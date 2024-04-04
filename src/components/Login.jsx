@@ -23,9 +23,12 @@ function Login() {
         }
       )
       .then((res) => {
-        console.log(res.data.status);
+        console.log(res);
         if ((res.data.status = "success")) {
-          navigate("/");
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${res.data.token}`;
+          // navigate("/");
         } else {
           navigate("/login");
         }

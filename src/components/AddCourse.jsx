@@ -36,7 +36,6 @@ function AddCourse() {
   const [Search, setSearch] = useState(""); //state for course search
   const [dialogopen, setDialogopen] = useState(false); // state for alertdialog
   const [fetchedshopkeepers, setFetchedshopkeepers] = useState(); // code to get all shopkeeper from db
-
   const handleCountryChange = (val) => {
     setCountry(val);
   };
@@ -101,15 +100,22 @@ function AddCourse() {
   };
 
   const handleShopDelete = (_id) => {
-    axios
-      .delete(`${API}/shopkeepers/${_id}`)
-      .then((res) => {
-        alert("Shop Deleted");
-        getdata();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this shop?"
+    );
+    if (confirmDelete) {
+      axios
+        .delete(`${API}/shopkeepers/${_id}`)
+        .then((res) => {
+          alert("Shop Deleted");
+          getdata();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // do nothing
+    }
   };
 
   return (

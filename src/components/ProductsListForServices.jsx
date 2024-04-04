@@ -24,8 +24,11 @@ function ProductsListForServices() {
     axios
       .get(`${API}/devicerequest`)
       .then((res) => {
-        // console.log(res.data.allrequestedDevices);
-        setAllrequestedDevice(res.data.allrequestedDevices);
+        // Filter out devices with issueresolvestatus as "completed"
+        const filteredCompletedDevices = res.data.allrequestedDevices.filter(
+          (device) => device.issueresolveStatus !== "completed"
+        );
+        setAllrequestedDevice(filteredCompletedDevices);
       })
       .catch((err) => {
         console.log(err);
@@ -62,7 +65,7 @@ function ProductsListForServices() {
 
   // code to update problemstatus with axios put request
   const handleProblemUpdate = async (_id) => {
-    console.log(issuechange);
+    // console.log(issuechange);
     setOpen(false);
 
     try {
