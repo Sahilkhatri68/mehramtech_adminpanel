@@ -18,13 +18,12 @@ function Header({ Children }) {
   const logincheck = true;
   const navigate = useNavigate();
 
-  const checklogin = () => {
-    axios
+  const checklogin = async () => {
+    await axios
       .get(`${API}/adminAuthentication/check_have_token`, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         if (res.data.token !== true) {
           navigate("/login");
         }

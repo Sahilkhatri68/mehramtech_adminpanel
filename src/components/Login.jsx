@@ -23,12 +23,10 @@ function Login() {
         }
       )
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         if ((res.data.status = "success")) {
-          // axios.defaults.headers.common[
-          //   "Authorization"
-          // ] = `Bearer ${res.data.token}`;
-          navigate("/");
+          localStorage.setItem("Admin_token", res.data.token); //code to set token in localstorage
+          return navigate("/");
         } else {
           navigate("/login"); //if not found then it will send to login page
         }
