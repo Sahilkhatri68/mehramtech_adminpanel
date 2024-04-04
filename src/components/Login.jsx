@@ -28,7 +28,7 @@ function Login() {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.data.token}`;
-          // navigate("/");
+          navigate("/");
         } else {
           navigate("/login");
         }
