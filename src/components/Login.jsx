@@ -23,14 +23,14 @@ function Login() {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if ((res.data.status = "success")) {
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${res.data.token}`;
+          // axios.defaults.headers.common[
+          //   "Authorization"
+          // ] = `Bearer ${res.data.token}`;
           navigate("/");
         } else {
-          navigate("/login");
+          navigate("/login"); //if not found then it will send to login page
         }
       })
       .catch((err) => {

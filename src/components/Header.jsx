@@ -24,7 +24,10 @@ function Header({ Children }) {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.data.token !== true) return navigate("/login");
+        console.log(res);
+        if (res.data.token !== true) {
+          navigate("/login");
+        }
       })
       .catch((err) => {
         navigate("/login");
