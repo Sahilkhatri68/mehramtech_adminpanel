@@ -10,7 +10,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import axios from "axios";
 import { API } from "./API/API";
-import io from "socket.io-client";
+// import io from "socket.io-client";  (socket package)
 
 function Header({ Children }) {
   const [sidebar, setSidebar] = useState(false); // for handling sidebar
@@ -64,40 +64,40 @@ function Header({ Children }) {
   };
 
   // websocket connection code
-  useEffect(() => {
-    const socket = io("http://localhost:4000", { transports: ["websocket"] });
+  // useEffect(() => {
+  //   const socket = io("http://localhost:4000", { transports: ["websocket"] });
 
-    socket.on("connect", () => {
-      console.log("Admin is connected with WebSocket server");
-      socket.emit("admin_connected", "Admin is connected with shopkeeper");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Admin is connected with WebSocket server");
+  //     socket.emit("admin_connected", "Admin is connected with shopkeeper");
+  //   });
 
-    socket.on("shopkeeper_message", (data) => {
-      console.log("Received message from shopkeeper:", data);
-    });
+  //   socket.on("shopkeeper_message", (data) => {
+  //     console.log("Received message from shopkeeper:", data);
+  //   });
 
-    socket.on("notification", (message) => {
-      console.log("Received notification from shopkeeper:", message);
-    });
+  //   socket.on("notification", (message) => {
+  //     console.log("Received notification from shopkeeper:", message);
+  //   });
 
-    // socket.on("disconnect", () => {
-    //   console.log("Disconnected from WebSocket server");
-    // });
+  //   // socket.on("disconnect", () => {
+  //   //   console.log("Disconnected from WebSocket server");
+  //   // });
 
-    // // Example: Handle incoming messages
-    // socket.on("message", (data) => {
-    //   console.log("Received message:", data);
-    //   // Update state or perform actions based on incoming messages
-    // });
+  //   // // Example: Handle incoming messages
+  //   // socket.on("message", (data) => {
+  //   //   console.log("Received message:", data);
+  //   //   // Update state or perform actions based on incoming messages
+  //   // });
 
-    // // Example: Emit a message to the server
-    // socket.emit("hello", "Hello, server!");
+  //   // // Example: Emit a message to the server
+  //   // socket.emit("hello", "Hello, server!");
 
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   // Clean up the socket connection when the component unmounts
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   return (
     <div>
